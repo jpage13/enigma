@@ -1,6 +1,6 @@
 require 'rspec'
-require './lib/offset'
 require './spec/spec_helper'
+require './lib/offset'
 
 describe Offset do
   before :each do
