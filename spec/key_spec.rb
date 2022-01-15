@@ -16,6 +16,15 @@ describe Key do
   end
 
 
-  xit 'can return a random 5 digit number' do
+  it 'returns 5 digit number' do
+    expect(@key.key_generator.length).to eq(5)
+  end
 
+  it 'can read keys' do
+    key = Key.new("79671")
+    expect(key.a_key).to eq(79)
+    expect(key.b_key).to eq(96)
+    expect(key.c_key).to eq(67)
+    expect(key.d_key).to eq(71)
+  end
 end
