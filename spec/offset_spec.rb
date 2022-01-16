@@ -4,34 +4,44 @@ require './lib/offset'
 
 describe Offset do
   before :each do
-    @offset = Offset.new
+    @offset_today = Offset.new
+    @offset_christmas = Offset.new("251222")
+    @date_squared = Time.now.strftime("%d%m%y").to_i**2
   end
 
   it 'exists' do
-    expect(@offset).to be_instance_of(Offset)
+    expect(@offset_today).to be_instance_of(Offset)
+    expect(@offset_christmas).to be_instance_of(Offset)
   end
 
   it 'has a date formatted correctly' do
-    expect(@offset.date.length).to eq(6)
-    expect(@offset.date).to be_a(String)
+    expect(@offset_today.date.length).to eq(6)
+    expect(@offset_today.date).to be_a(String)
+    expect(@offset_christmas.date.length).to eq(6)
+    expect(@offset_christmas.date).to be_a(String)
+
   end
 
   it 'can square the date' do
-    offset = Offset.new("150122")
-    expect(offset.date_squared).to eq(22536614884)
+    expect(@offset_today.date_squared).to eq(@date_squared)
+    expect(@offset_christmas.date_squared).to eq(63112493284)
+
   end
 
   it 'can give last 4 digits' do
-    offset = Offset.new("150122")
-    expect(offset.last_four_digits).to eq("4884")
+    expect(@offset_today.last_four_digits).to eq(@date_squared.digits[0..3].reverse.join)
+    expect(@offset_christmas.last_four_digits).to eq("3284")
   end
 
   it 'can give each offset value' do
-    offset = Offset.new("150122")
-    expect(offset.a_offset).to eq("4")
-    expect(offset.b_offset).to eq("8")
-    expect(offset.c_offset).to eq("8")
-    expect(offset.d_offset).to eq("4")
+    expect(@offset_today.a_offset).to eq(@date_squared.digits[0].to_s)
+    expect(@offset_today.b_offset).to eq(@date_squared.digits[1].to_s)
+    expect(@offset_today.c_offset).to eq(@date_squared.digits[2].to_s)
+    expect(@offset_today.d_offset).to eq(@date_squared.digits[3].to_s)
+    expect(@offset_christmas.a_offset).to eq("3")
+    expect(@offset_christmas.b_offset).to eq("2")
+    expect(@offset_christmas.c_offset).to eq("8")
+    expect(@offset_christmas.d_offset).to eq("4")
   end
 
 end
