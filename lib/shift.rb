@@ -4,9 +4,9 @@ require './lib/offset'
 class Shift
   attr_reader :key, :offset
 
-  def initialize(key = Key.new, date = Offset.new)
-    @key = key
-    @offset = date
+  def initialize(key = nil, date = nil)
+    @key = if key.nil? then Key.new else Key.new(key) end
+    @offset = if date.nil? then Offset.new else Offset.new(date) end
   end
 
   def a_shift
