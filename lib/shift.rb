@@ -1,8 +1,11 @@
+require './lib/key'
+require './lib/offset'
+
 class Shift
 
-  def initialize(key, offset)
-    @key = key
-    @offset = offset
+  def initialize(key, date)
+    @key = Key.new(key)
+    @offset = Offset.new(date)
   end
 
   def a_shift
