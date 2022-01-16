@@ -7,7 +7,7 @@ require './lib/shift'
 describe Shift do
   before :each do
     @shift_random = Shift.new
-    @shift_given = Shift.new(Key.new("79671"), Offset.new("251222"))
+    @shift_given = Shift.new("79671", "251222")
   end
 
   it 'exists' do
