@@ -21,13 +21,16 @@ describe Enigma do
     expect(@enigma.decrypt("keder ohulw", "02715", "040895")).to eq(expected)
   end
 
-  xit 'can encrypt a message with a key and no date argument' do
+  it 'can encrypt a message with a key and no date argument' do
+    expect(@enigma.encrypt("hello world", "02715")).to be_a(Hash)
   end
 
-  xit 'can decrypt a message with a key and no date argument' do
+  it 'can decrypt a message with a key and no date argument' do
+    expect(@enigma.encrypt("hello world", "02715")).to be_a(Hash)
   end
 
-  xit 'can encypt a message with no key or date arguments' do
+  it 'can encrypt a message with no key or date arguments' do
+    expect(@enigma.encrypt("hello world")).to be_a(Hash)
   end
 
 end
