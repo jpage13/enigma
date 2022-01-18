@@ -26,7 +26,8 @@ describe Enigma do
   end
 
   it 'can decrypt a message with a key and no date argument' do
-    expect(@enigma.encrypt("hello world", "02715")).to be_a(Hash)
+    encrypted = @enigma.encrypt("hello world", "02715")
+    expect(@enigma.decrypt(encrypted[:encryption], "02715")).to be_a(Hash)
   end
 
   it 'can encrypt a message with no key or date arguments' do
