@@ -1,5 +1,4 @@
 require 'date'
-require './lib/key'
 require './lib/offset'
 require './lib/shift'
 
@@ -8,12 +7,15 @@ class Enigma
 
   def initialize
     @alphabet = ("a".."z").to_a << " "
-    @key = Key.new.to_s
-    @date = Offset.new.to_s
   end
 
-  def encrypt(message, key = @key, date = @date)
-    shifts = Shift.new(key, date)
+  def key_generator
+    5.times.map { rand(10).to_s }.join
+  end
+
+  def encrypt(message, key = key_generator, date = Time.now.strftime("%d%m%y"))
+    offset_gen = Offset.new(date)
+    shifts = Shift.new(key, offset_gen)
     encryption = {}
     encrypted_message = []
     message_chunk = message.chars.each_slice(4).to_a
@@ -31,15 +33,14 @@ class Enigma
         end
       end
     end
-
     encryption[:encryption] = encrypted_message.join
     encryption[:key] = key
-    encryption[:date] = date
+    encryption[:date] = offset_gen.date
     encryption
   end
 
-  def decrypt(ciphertext, key = @key, date = @date)
-    shifts = Shift.new(key, date)
+  def decrypt(ciphertext, key = nil, date = Time.now.strftime("%d%m%y"))
+    shifts = Shift.new(key, Offset.new(date))
     decryption = {}
     decrypted_message = []
     ciphertext_chunks = ciphertext.chars.each_slice(4).to_a
