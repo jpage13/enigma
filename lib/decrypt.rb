@@ -1,17 +1,18 @@
 require 'date'
 require './lib/enigma'
-require './lib/fileaccessor'
+require './lib/file_accessor'
 
 include FileAccessor
 
-message = reader(ARGV[0])
-enigma = Enigma.new
-secret_decryption = enigma.decrypt(secret, ARGV[2], ARGV[3])
+secret_message = reader(ARGV[0])
 
-decryption = secret_decryption[:decryption]
+enigma = Enigma.new
+secret_decryption = enigma.decrypt(secret_message, ARGV[2], ARGV[3])
+
+cryption = secret_decryption[:decryption]
 key = secret_decryption[:key]
 date = secret_decryption[:date]
 
-writer(decryption, ARGV[1])
+writer(cryption, ARGV[1])
 
 puts "Created 'decrypted.txt' with the key #{key} and date #{date}"
