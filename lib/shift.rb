@@ -1,27 +1,70 @@
-require './lib/key'
 require './lib/offset'
 
 class Shift
   attr_reader :key, :offset
 
-  def initialize(key = nil, date = nil)
-    @key = if key.nil? then Key.new else Key.new(key) end
-    @offset = if date.nil? then Offset.new else Offset.new(date) end
+  def initialize(key = key_generator, offset = Offset.new)
+    @key = key
+    @offset = offset
+  end
+
+  def key_generator
+    5.times.map { rand(10).to_s }.join
+  end
+
+  def a_key
+    (@key[0] + @key[1]).to_i
+  end
+
+  def b_key
+    (@key[1] + @key[2]).to_i
+  end
+
+  def c_key
+    (@key[2] + @key[3]).to_i
+  end
+
+  def d_key
+    (@key[3] + @key[4]).to_i
+  end
+
+  def date_squared
+    @offset.date.to_i * @offset.date.to_i
+  end
+
+  def last_four_digits
+    date_squared.digits[0..3].reverse.join
+  end
+
+  def a_offset
+    last_four_digits[0]
+  end
+
+  def b_offset
+    last_four_digits[1]
+  end
+
+  def c_offset
+    last_four_digits[2]
+  end
+
+  def d_offset
+    last_four_digits[3]
   end
 
   def a_shift
-    self.key.a_key.to_i + self.offset.a_offset.to_i
+    self.a_key.to_i + a_offset.to_i
   end
 
   def b_shift
-    self.key.b_key.to_i + self.offset.b_offset.to_i
+    self.b_key.to_i + b_offset.to_i
   end
 
   def c_shift
-    self.key.c_key.to_i + self.offset.c_offset.to_i
+    self.c_key.to_i + c_offset.to_i
   end
 
   def d_shift
-    self.key.d_key.to_i + self.offset.d_offset.to_i
+    self.d_key.to_i + d_offset.to_i
   end
 end
